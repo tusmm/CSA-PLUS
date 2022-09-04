@@ -12,7 +12,7 @@ wsheet.update("A1", "Names")
 wsheet.update("B1", "Scoring")
 # adds titles
 
-iter = 2
+data = []
 
 for file in os.listdir("comments"):  # iterates through comment files
     file_data = file.split(",")
@@ -23,12 +23,23 @@ for file in os.listdir("comments"):  # iterates through comment files
     if name[-4:] == ".txt":
         name = name[:-4]
 
-    wsheet.update("A" + str(iter), name)
+    with open(os.path.join("comments", file), "r") as f:  # adds student comments/scoring to list
+        data.append((name, f.read()))
+
+data.sort()
+# sorts list
+
+iter = 2
+
+for people in data:
+
+    wsheet.update("A" + str(iter), people[0])
     # adds student name to worksheet
 
-    with open(os.path.join("comments", file), "r") as f:  # adds student comments/scoring to google sheet
-        wsheet.update("B" + str(iter), f.read())
-    
+    wsheet.update("B" + str(iter), people[1].replace("\n", "\n\n"))
+    # adds student comments to worksheet
+    # adds more spacing for easier viewing when data copied to grade book
+
     iter += 1
-    time.sleep(1)
+    time.sleep(2)
     # waits 1 second to comply with API rate limits 
