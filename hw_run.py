@@ -7,9 +7,9 @@ RUN_DIR = ""
 CHECK_EXTENSION = ".py"
 RUN_DIRECT = True
 RUN_WITH_TEST = False
-RUN_NAME = "pyramids.py"
+RUN_NAME = "intercepts.py"
 TEST_NAME = ""
-FILE_NAMES = ["pyramids.py"]
+FILE_NAMES = [RUN_NAME]
 ZIP_NAME = "hw.zip"
 MAIN_DIR = os.getcwd()
 # assignment-specific setting values
@@ -105,6 +105,14 @@ def main():
 
     except:
         print("No hw.zip file.  Grading continuation program commencing...")
+    
+    try:
+        os.mkdir(os.path.join(MAIN_DIR, "comments"))
+        os.mkdir(os.path.join(MAIN_DIR, "incomplete"))
+        # creates comments and incomplete folders if they do not exist
+
+    except:
+        pass
 
     files = os.listdir("hw")
 
