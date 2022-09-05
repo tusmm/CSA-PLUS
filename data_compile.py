@@ -19,6 +19,8 @@ for file in os.listdir("comments"):  # iterates through comment files
 
     name = file_data[0].split("-")[-1].strip() + ", " + file_data[1].split()[0]
     # extracts student name from comment file names
+    # configured with RIT file naming configurations
+    # must be changed to use for non-RIT CS grading
 
     if name[-4:] == ".txt":
         name = name[:-4]
