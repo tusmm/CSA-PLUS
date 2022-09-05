@@ -5,12 +5,18 @@ import zipfile
 
 RUN_DIR = ""
 CHECK_EXTENSION = ".py"
+
 RUN_DIRECT = True
 RUN_WITH_TEST = False
 RUN_NAME = "intercepts.py"
 TEST_NAME = ""
 FILE_NAMES = [RUN_NAME]
+
 ZIP_NAME = "hw.zip"
+
+RUN_COMMENT_TITLES = ["Behavior"]
+CODE_COMMENT_TITLES = []
+
 MAIN_DIR = os.getcwd()
 # assignment-specific setting values
 
@@ -55,16 +61,19 @@ def view(file):  # displays user files in terminal
                 print(f.read())
 
             print("\n---------------------")
-            design = input("Design comments: ")
-            documentation = input("Documentation comments: ")
-            style = input("Style comments: ")
-            additional = input("Additional comments: ")
-            # gets grader comments
+
+            comment_arr = []
+
+            for comment in CODE_COMMENT_TITLES:  # gets grader comments
+                comment_arr.append(input(comment + " comments: "))
+
+            data = ""
 
             if len(FILE_NAMES) > 1:  # formats comments for single and multi-file projects
-                data = "\n< " + included + " >\nDesign: " + design + "\nDocumentation: " + documentation + "\nStyle: " + style + "\n" + additional
-            else:
-                data = "\nDesign: " + design + "\nDocumentation: " + documentation + "\nStyle: " + style + "\n" + additional
+                data = "\n< " + included + " >\n"
+
+            for index in range(len(CODE_COMMENT_TITLES)):  # adds grader comments to string
+                data += CODE_COMMENT_TITLES[index] + ": " + comment_arr[index] + "\n"
 
             with open(os.path.join("comments", file + ".txt"), "a") as f:  # writes comments to local file
                 f.write(data)
@@ -129,11 +138,20 @@ def main():
                 # initiates run handler and gets completion code
 
                 if complete.upper() == "Y":  # queries for behavior comments on successful completion
-                    comments = input("Behavior comments: ")
+                    comment_arr = []
+
+                    for comment in RUN_COMMENT_TITLES:  # gets grader comments
+                        comment_arr.append(input(comment + " comments: "))
+
                     os.remove(os.path.join("hw", file))
 
+                    data = ""
+
+                    for index in range(len(RUN_COMMENT_TITLES)):  # adds grader comments to string
+                        data += RUN_COMMENT_TITLES[index] + ": " + comment_arr[index] + "\n"
+
                     with open(os.path.join("comments", file[:-4] + ".txt"), "w") as f:
-                        f.write("Behavior: " + comments)
+                        f.write(data)
 
                     view(file[:-4])
 
