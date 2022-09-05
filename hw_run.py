@@ -3,22 +3,51 @@ import shutil
 import zipfile
 
 
+"""
+RUN CONFIGURATION SETTINGS vvv
+"""
+
 RUN_DIR = ""
+# run directory
+# will almost always be "" (current directory)
+
 CHECK_EXTENSION = ".py"
+# run extension
 
 RUN_DIRECT = True
+# runs program directly by file name
+
 RUN_WITH_TEST = False
+# runs program implementing external test program
+
 RUN_NAME = "intercepts.py"
+# program file to initiate execution with
+
 TEST_NAME = ""
-FILE_NAMES = [RUN_NAME]
+# external test program file name (must be in main directory)
+
+FILE_NAMES = [RUN_NAME, "test.py"]
+# program file names
 
 ZIP_NAME = "hw.zip"
+# homework main zip folder
 
-RUN_COMMENT_TITLES = ["Behavior"]
-CODE_COMMENT_TITLES = []
+RUN_COMMENT_TITLES = ["Behavior", "Run"]
+# comment titles following code execution
+
+CODE_COMMENT_TITLES = [["test1", "test2", "test3"], ["test4", "test5", "test6"]]
+# comment titles associated with code blocks in each file
+# index of nested array corresponds with associated file index in FILE_NAMES variable
+
+ADDITIONAL_COMMENTS = ["Total", "Notes"]
+# aditional comment titles
 
 MAIN_DIR = os.getcwd()
-# assignment-specific setting values
+# gets the current directory to be used throughout the program
+
+"""
+RUN CONFIGURATION SETTINGS ^^^
+"""
 
 
 def run_program_python(dir, name):  # manages python file execution
@@ -44,13 +73,16 @@ def extract(name, dir):  # extracts zip files
 
 
 def view(file):  # displays user files in terminal
+    
+    cct_iter = 0
+
     for included in FILE_NAMES:
         try:
             path = os.path.join("hw", file)
             run = os.path.join(os.path.join(path, RUN_DIR), included)
 
             if not os.path.isfile(run):
-                print("ERR")
+                print(f'< FILE "{included}"" NOT FOUND - SKIPPING >')
                 return
 
             print("\n---------------------")
@@ -64,7 +96,7 @@ def view(file):  # displays user files in terminal
 
             comment_arr = []
 
-            for comment in CODE_COMMENT_TITLES:  # gets grader comments
+            for comment in CODE_COMMENT_TITLES[cct_iter]:  # gets grader comments
                 comment_arr.append(input(comment + " comments: "))
 
             data = ""
@@ -72,13 +104,15 @@ def view(file):  # displays user files in terminal
             if len(FILE_NAMES) > 1:  # formats comments for single and multi-file projects
                 data = "\n< " + included + " >\n"
 
-            for index in range(len(CODE_COMMENT_TITLES)):  # adds grader comments to string
-                data += CODE_COMMENT_TITLES[index] + ": " + comment_arr[index] + "\n"
+            for index in range(len(CODE_COMMENT_TITLES[cct_iter])):  # adds grader comments to string
+                data += CODE_COMMENT_TITLES[cct_iter][index] + ": " + comment_arr[index] + "\n"
 
             with open(os.path.join("comments", file + ".txt"), "a") as f:  # writes comments to local file
                 f.write(data)
                 
             os.rename(run, os.path.join(os.path.join(path, RUN_DIR), RUN_NAME + ".complete"))
+
+            cct_iter += 1
         except:
             pass
 
@@ -155,6 +189,24 @@ def main():
 
                     view(file[:-4])
 
+                    print()
+
+                    comment_arr = []
+
+                    if (len(FILE_NAMES) > 1):
+                        data = "\n"
+                    else:
+                        data = ""
+
+                    for comment in ADDITIONAL_COMMENTS:  # gets additional comments
+                        comment_arr.append(input(comment + " comments: "))
+                    
+                    for index in range(len(ADDITIONAL_COMMENTS)):  # adds grader comments to string
+                        data += ADDITIONAL_COMMENTS[index] + ": " + comment_arr[index] + "\n"
+
+                    with open(os.path.join("comments", file[:-4] + ".txt"), "a") as f:  # writes comments to local file
+                        f.write(data)
+
                 else:
                     shutil.copyfile(os.path.join("hw", file), os.path.join("incomplete", file))
                     os.remove(os.path.join("hw", file))
@@ -174,7 +226,7 @@ def main():
 
         except Exception as a:  # handles file/other errors
             print(a)
-            print("ERROR: SKIPPING")
+            print("< ERROR - SKIPPING >")
 
 
 if __name__ == "__main__":
