@@ -5,7 +5,10 @@ import zipfile
 
 RUN_DIR = ""
 CHECK_EXTENSION = ".py"
+RUN_DIRECT = True
+RUN_WITH_TEST = False
 RUN_NAME = "pyramids.py"
+TEST_NAME = ""
 FILE_NAMES = ["pyramids.py"]
 ZIP_NAME = "hw.zip"
 MAIN_DIR = os.getcwd()
@@ -13,10 +16,16 @@ MAIN_DIR = os.getcwd()
 
 
 def run_program_python(dir, name):  # manages python file execution
-    cmd = "py " + name
-    os.chdir(dir)
-    os.system(cmd)
-    os.chdir(MAIN_DIR)
+    if RUN_DIRECT:
+        cmd = "py " + name
+        os.chdir(dir)
+        os.system(cmd)
+        os.chdir(MAIN_DIR)
+    
+    if RUN_WITH_TEST:
+        cmd = "py " + TEST_NAME + ' "' + name + '" "' + dir + '"'
+        os.system(cmd)
+        # test file must be in CSA+ main working directory
 
 
 def run_program(dir, name):  # program run wrapper
