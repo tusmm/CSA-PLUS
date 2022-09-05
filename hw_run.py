@@ -89,7 +89,7 @@ def view(file):  # displays user files in terminal
             print(included)
             print("---------------------")
 
-            with open(run, "r") as f:  # displays file text
+            with open(run, "r", encoding='utf-8') as f:  # displays file text
                 print(f.read())
 
             print("\n---------------------")
@@ -113,8 +113,9 @@ def view(file):  # displays user files in terminal
             os.rename(run, os.path.join(os.path.join(path, RUN_DIR), RUN_NAME + ".complete"))
 
             cct_iter += 1
-        except:
-            pass
+        except Exception as a:
+            print(a)
+            print("< UNEXPECTED ERROR ENCOUNTERED >")
 
 
 def run_handle(path):  # handles program run
