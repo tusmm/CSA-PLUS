@@ -26,20 +26,20 @@ RUN_NAME = "intercepts.py"
 TEST_NAME = ""
 # external test program file name (must be in main directory)
 
-FILE_NAMES = [RUN_NAME, "test.py"]
+FILE_NAMES = [RUN_NAME]
 # program file names
 
 ZIP_NAME = "hw.zip"
 # homework main zip folder
 
-RUN_COMMENT_TITLES = ["Behavior", "Run"]
+RUN_COMMENT_TITLES = ["Sufficient test cases"]
 # comment titles following code execution
 
-CODE_COMMENT_TITLES = [["test1", "test2", "test3"], ["test4", "test5", "test6"]]
+CODE_COMMENT_TITLES = [["no_x_intercept function", "x_intercept function", "y_intercept function", "print_point function", "test_case function"]]
 # comment titles associated with code blocks in each file
 # index of nested array corresponds with associated file index in FILE_NAMES variable
 
-ADDITIONAL_COMMENTS = ["Total", "Notes"]
+ADDITIONAL_COMMENTS = ["Style", "Documentation", "Total"]
 # aditional comment titles
 
 MAIN_DIR = os.getcwd()
