@@ -20,7 +20,7 @@ RUN_DIRECT = True
 RUN_WITH_TEST = False
 # runs program implementing external test program
 
-RUN_NAME = "intercepts.py"
+RUN_NAME = "pentagons.py"
 # program file to initiate execution with
 
 TEST_NAME = ""
@@ -32,14 +32,14 @@ FILE_NAMES = [RUN_NAME]
 ZIP_NAME = "hw.zip"
 # homework main zip folder
 
-RUN_COMMENT_TITLES = ["Sufficient test cases"]
+RUN_COMMENT_TITLES = ["Task 1 functionality (15%)", "Task 2 functionality (20%)"]
 # comment titles following code execution
 
-CODE_COMMENT_TITLES = [["no_x_intercept function", "x_intercept function", "y_intercept function", "print_point function", "test_case function"]]
+CODE_COMMENT_TITLES = [["Task 1 program correctness (15%)", "Task 2 program correctness (40%)"]]
 # comment titles associated with code blocks in each file
 # index of nested array corresponds with associated file index in FILE_NAMES variable
 
-ADDITIONAL_COMMENTS = ["Style", "Documentation", "Total"]
+ADDITIONAL_COMMENTS = ["Style (5%)", "Documentation (5%)", "Total"]
 # aditional comment titles
 
 MAIN_DIR = os.getcwd()
@@ -162,7 +162,7 @@ def main():
 
     for file in files:  # iterates through homework files
         try:
-            if file[-4:] == ".zip":
+            if file[-4:] == ".zip" and os.path.isfile(os.path.join("hw", file)):
                 path = os.path.join("hw", file[:-4])
                 extract(os.path.join("hw", file), path)
 
