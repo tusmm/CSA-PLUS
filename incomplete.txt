@@ -1,0 +1,11 @@
+sum_squares_test [task 1] valid output (5%): 
+stair_climb_test [task 2] valid output (5%): 
+sum_squares function (20%): NICE WORK
+sum_squares_accum function (15%): 
+sum_squares_tail function (5%): 
+stair_climb function (20%): NICE WORK
+stair_climb_accum function (15%): 
+stair_climb_tail function (5%): 
+Style (5%): 
+Documentation (5%): 
+Total: (-10 for improper file submission)
