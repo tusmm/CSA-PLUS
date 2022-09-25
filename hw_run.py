@@ -14,16 +14,16 @@ RUN_DIR = ""
 CHECK_EXTENSION = ".py"
 # run extension
 
-RUN_DIRECT = True
+RUN_DIRECT = False
 # runs program directly by file name
 
-RUN_WITH_TEST = False
+RUN_WITH_TEST = True
 # runs program implementing external test program
 
-RUN_NAME = "pentagons.py"
+RUN_NAME = "password_checker.py"
 # program file to initiate execution with
 
-TEST_NAME = ""
+TEST_NAME = "run.py"
 # external test program file name (must be in main directory)
 
 FILE_NAMES = [RUN_NAME]
@@ -32,10 +32,10 @@ FILE_NAMES = [RUN_NAME]
 ZIP_NAME = "hw.zip"
 # homework main zip folder
 
-RUN_COMMENT_TITLES = ["Task 1 functionality (15%)", "Task 2 functionality (20%)"]
+RUN_COMMENT_TITLES = ["length_check functionality (5%)", "has_digit functionality (15%)", "has_special functionality (15%)", "is_not_popular functionality (25%)", "check_password functionality (20%)", "main functionality and loop (10%)"]
 # comment titles following code execution
 
-CODE_COMMENT_TITLES = [["Task 1 program correctness (15%)", "Task 2 program correctness (40%)"]]
+CODE_COMMENT_TITLES = [[]]
 # comment titles associated with code blocks in each file
 # index of nested array corresponds with associated file index in FILE_NAMES variable
 
@@ -54,13 +54,24 @@ def run_program_python(dir, name):  # manages python file execution
     if RUN_DIRECT:
         cmd = "py " + name
         os.chdir(dir)
-        os.system(cmd)
+
+        try:
+            os.system(cmd)
+        except:
+            pass
+
         os.chdir(MAIN_DIR)
     
     if RUN_WITH_TEST:
         cmd = "py " + TEST_NAME + ' "' + name + '" "' + dir + '"'
-        os.system(cmd)
-        # test file must be in CSA+ main working directory
+        print(cmd)
+        
+        try:
+            os.system(cmd)
+            # test file must be in CSA+ main working directory
+            
+        except:
+            pass
 
 
 def run_program(dir, name):  # program run wrapper
