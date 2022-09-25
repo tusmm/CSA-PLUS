@@ -4,7 +4,7 @@ import os
 
 
 gc = gspread.service_account(filename="credentials.json")
-gsheet = gc.open_by_url("https://docs.google.com/spreadsheets/d/10Md0RhjnPVyUNR_grxa46mNGy_dZoMT_Dbd8nUdMrLk/edit?usp=sharing")
+gsheet = gc.open_by_url("https://docs.google.com/spreadsheets/d/SPREADSHEET_LINK")
 wsheet = gsheet.get_worksheet(0)
 # gets google sheet and worksheet
 
