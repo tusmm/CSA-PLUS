@@ -1,4 +1,5 @@
 import os
+import sys
 import shutil
 import zipfile
 
@@ -11,6 +12,9 @@ RUN_DIR = ""
 # run directory
 # will almost always be "" (current directory)
 
+ALT_DIRS = ["homework06"]
+# alternative directives to check for code if not found in RUN_DIR
+
 CHECK_EXTENSION = ".py"
 # run extension
 
@@ -20,26 +24,27 @@ RUN_DIRECT = False
 RUN_WITH_TEST = True
 # runs program implementing external test program
 
-RUN_NAME = "password_checker.py"
+RUN_NAME = "test_debug1.py"
 # program file to initiate execution with
 
 TEST_NAME = "run.py"
 # external test program file name (must be in main directory)
 
-FILE_NAMES = [RUN_NAME]
+FILE_NAMES = ["test_debug1.py", "test_debug2.py"]
 # program file names
 
 ZIP_NAME = "hw.zip"
 # homework main zip folder
 
-RUN_COMMENT_TITLES = ["length_check functionality (5%)", "has_digit functionality (15%)", "has_special functionality (15%)", "is_not_popular functionality (25%)", "check_password functionality (20%)", "main functionality and loop (10%)"]
+RUN_COMMENT_TITLES = []
 # comment titles following code execution
 
-CODE_COMMENT_TITLES = [[]]
+CODE_COMMENT_TITLES = [[], []]
 # comment titles associated with code blocks in each file
 # index of nested array corresponds with associated file index in FILE_NAMES variable
+# EVEN IF FILE HAS NO COMMENTS, EMPTY LIST '[]' MUST BE PLACED HERE FOR EACH FILE
 
-ADDITIONAL_COMMENTS = ["Style (5%)", "Documentation (5%)", "Total"]
+ADDITIONAL_COMMENTS = ["Part 1 (50%)", "Part 2 (50%)", "Style", "Documentation", "Total"]
 # aditional comment titles
 
 MAIN_DIR = os.getcwd()
@@ -83,21 +88,21 @@ def extract(name, dir):  # extracts zip files
         zip_ref.extractall(dir)
 
 
-def view(file):  # displays user files in terminal
+def view(file, run_path):  # displays user files in terminal
     
     cct_iter = 0
 
     for included in FILE_NAMES:
         try:
-            path = os.path.join("hw", file)
-            run = os.path.join(os.path.join(path, RUN_DIR), included)
+            run = os.path.join(run_path, included)
 
             if not os.path.isfile(run):
                 print(f'< FILE "{included}"" NOT FOUND - SKIPPING >')
                 return
 
             print("\n---------------------")
-            print(included)
+            print("FILE: " + included)
+            print("DIR: " + run_path)
             print("---------------------")
 
             with open(run, "r", encoding='utf-8') as f:  # displays file text
@@ -112,26 +117,42 @@ def view(file):  # displays user files in terminal
 
             data = ""
 
-            if len(FILE_NAMES) > 1:  # formats comments for single and multi-file projects
+            if len(FILE_NAMES) > 1 and len(CODE_COMMENT_TITLES[cct_iter]) > 0:  # formats comments for single and multi-file projects
                 data = "\n< " + included + " >\n"
-
+            
             for index in range(len(CODE_COMMENT_TITLES[cct_iter])):  # adds grader comments to string
                 data += CODE_COMMENT_TITLES[cct_iter][index] + ": " + comment_arr[index] + "\n"
 
             with open(os.path.join("comments", file + ".txt"), "a") as f:  # writes comments to local file
                 f.write(data)
                 
-            os.rename(run, os.path.join(os.path.join(path, RUN_DIR), RUN_NAME + ".complete"))
+            try:
+                os.rename(run, os.path.join(run_path, RUN_NAME + ".complete"))
+            except:
+                pass
 
             cct_iter += 1
         except Exception as a:
+            exc_type, exc_obj, exc_tb = sys.exc_info()
+            fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+            
             print(a)
+            print(exc_type, fname, exc_tb.tb_lineno)
             print("< UNEXPECTED ERROR ENCOUNTERED >")
 
 
 def run_handle(path):  # handles program run
     print("---------------------")
-    run_program(os.path.join(path, RUN_DIR), RUN_NAME)
+
+    run_path = os.path.join(path, RUN_DIR)
+
+    if not os.path.isfile(os.path.join(run_path, RUN_NAME)):
+        for alt in ALT_DIRS:
+            if os.path.isfile(os.path.join(os.path.join(path, alt), RUN_NAME)):
+                run_path = os.path.join(path, alt)
+                break
+
+    run_program(run_path, RUN_NAME)
     # runs program
 
     print("---------------------")
@@ -149,7 +170,7 @@ def run_handle(path):  # handles program run
         else:
             complete = "N"
     
-    return complete
+    return complete, run_path
 
 
 def main():
@@ -180,7 +201,7 @@ def main():
                 print("Student Info:")
                 print(file[:-4])
                 
-                complete = run_handle(path)
+                complete, run_path = run_handle(path)
                 # initiates run handler and gets completion code
 
                 if complete.upper() == "Y":  # queries for behavior comments on successful completion
@@ -199,16 +220,17 @@ def main():
                     with open(os.path.join("comments", file[:-4] + ".txt"), "w") as f:
                         f.write(data)
 
-                    view(file[:-4])
+                    view(file[:-4], run_path)
 
                     print()
 
                     comment_arr = []
+                    data = ""
 
-                    if (len(FILE_NAMES) > 1):
-                        data = "\n"
-                    else:
-                        data = ""
+                    if len(FILE_NAMES) > 1:
+                        for comments in CODE_COMMENT_TITLES:
+                            if comments != []:
+                                data = "\n"
 
                     for comment in ADDITIONAL_COMMENTS:  # gets additional comments
                         comment_arr.append(input(comment + " comments: "))
@@ -237,7 +259,11 @@ def main():
                 print("---------------------\n\n")
 
         except Exception as a:  # handles file/other errors
+            exc_type, exc_obj, exc_tb = sys.exc_info()
+            fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+            
             print(a)
+            print(exc_type, fname, exc_tb.tb_lineno)
             print("< ERROR - SKIPPING >")
 
 

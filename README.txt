@@ -4,6 +4,7 @@ Rename zip file to "hw.zip"
 Run hw_run.py
 
 Use incomplete.py to manage improperly formatted file names
+Use inc_rezip.py to rezip files in the incomplete folder
 Use data_compile.py to import data into google sheets using API
 
 INCLUDED (assignment-specific test files):
