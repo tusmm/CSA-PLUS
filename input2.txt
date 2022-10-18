@@ -1,0 +1,6 @@
+word_list.txt
+linear
+b
+c
+d
+

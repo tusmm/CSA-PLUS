@@ -1,0 +1,7 @@
+word_list.txt
+binary
+b
+c
+d
+ba
+

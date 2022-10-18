@@ -1,9 +1,0 @@
-length_check functionality (5%): 
-has_digit functionality (15%): 
-has_special functionality (15%): 
-is_not_popular functionality (25%): 
-check_password functionality (20%): 
-main functionality and loop (10%): 
-Style (5%): 
-Documentation (5%): 
-Total: (-10 for improper file submission)

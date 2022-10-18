@@ -4,8 +4,8 @@ import os
 
 
 gc = gspread.service_account(filename="credentials.json")
-gsheet = gc.open_by_url("https://docs.google.com/spreadsheets/d/SPREADSHEET_LINK")
-wsheet = gsheet.get_worksheet(0)
+gsheet = gc.open_by_url("https://docs.google.com/spreadsheets/d/10Md0RhjnPVyUNR_grxa46mNGy_dZoMT_Dbd8nUdMrLk/edit?usp=sharing")
+wsheet = gsheet.get_worksheet(7)
 # gets google sheet and worksheet
 
 wsheet.update("A1", "Names")
@@ -19,8 +19,6 @@ for file in os.listdir("comments"):  # iterates through comment files
 
     name = file_data[0].split("-")[-1].strip() + ", " + file_data[1].split()[0]
     # extracts student name from comment file names
-    # configured with RIT file naming configurations
-    # must be changed to use for non-RIT CS grading
 
     if name[-4:] == ".txt":
         name = name[:-4]

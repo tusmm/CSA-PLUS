@@ -3,11 +3,18 @@ CSA+ Grading Application
 Rename zip file to "hw.zip"
 Run hw_run.py
 
-Use incomplete.py to manage improperly formatted file names
-Use inc_rezip.py to rezip files in the incomplete folder
-Use data_compile.py to import data into google sheets using API
+Use incomplete.py to unzip student folders in the "incomplete" folder.  
+Will also create text files for comments with each student's name using the incomplete.txt file contents as a template.
 
-INCLUDED (assignment-specific test files):
-"run.py" - external run testing module file
-"input.txt" - testing module file used by "run.py" to pipe text into programs
-"rockyou.txt" - testing module file copied to student run directory, used, and removed
+Use inc_rezip.py to rezip all folders in the "incomplete" folder.  
+This makes it really easy to unzip (using incomplete.py), correct the student's who submitted incorrectly, 
+then rezip using inc_rezip.py, and then copy the zipped files back to the "hw" directory to continue using hw_run.py for the remaining assignments.
+
+Use data_compile.py to import data into google sheets using API.
+
+
+INCLUDED:
+The following files are also included to demonstrate additional files that might be used for an assignment:
+- run.py (test module)
+- input1.txt, input2.txt (piped input files)
+- word_list.txt, words_sorted.txt (utility files used by run.py)
