@@ -12,7 +12,7 @@ RUN_DIR = ""
 # run directory
 # will almost always be "" (current directory)
 
-ALT_DIRS = ["homework07"]
+ALT_DIRS = ["homework08"]
 # alternative directives to check for code if not found in RUN_DIR
 
 CHECK_EXTENSION = ".py"
@@ -24,22 +24,22 @@ RUN_DIRECT = False
 RUN_WITH_TEST = True
 # runs program implementing external test program
 
-RUN_NAME = "prefix_search.py"
+RUN_NAME = "selection_sort.py"
 # program file to initiate execution with
 
 TEST_NAME = "run.py"
 # external test program file name (must be in main directory)
 
-FILE_NAMES = ["prefix_search.py"]
+FILE_NAMES = ["selection_sort.py"]
 # program file names
 
 ZIP_NAME = "hw.zip"
 # homework main zip folder
 
-RUN_COMMENT_TITLES = ["Correct file reading (15%)", "Functional loop (15%)"]
+RUN_COMMENT_TITLES = []
 # comment titles following code execution
 
-CODE_COMMENT_TITLES = [["Binary search (40%)", "Linear search (30%)"]]
+CODE_COMMENT_TITLES = [["Performance (40%)", "Sorting code implementation (15%)", "File processing and main code (20%)", "Answers to questions (15%)"]]
 # comment titles associated with code blocks in each file
 # index of nested array corresponds with associated file index in FILE_NAMES variable
 # EVEN IF FILE HAS NO COMMENTS, EMPTY LIST '[]' MUST BE PLACED HERE FOR EACH FILE
@@ -49,6 +49,9 @@ ADDITIONAL_COMMENTS = ["Style", "Documentation", "Total"]
 
 MAIN_DIR = os.getcwd()
 # gets the current directory to be used throughout the program
+
+NOTEPAD_CMD = "notepad"
+# text editor command
 
 """
 RUN CONFIGURATION SETTINGS ^^^
@@ -165,14 +168,41 @@ def run_handle(path):  # handles program run
         complete = input("Run complete? (Y/N): ")
                 
     if complete.upper() == "N":  # handles incomplete program case
-        complete = input("Rerun program (R), Rerun/View program (V), or mark incomplete (I): ")
+        complete = input("Rerun program (R), View/Rerun program (V), Edit/Rerun program (E), or mark incomplete (I): ")
 
         if complete.upper() == "R":  # reruns program
             complete, run_path = run_handle(path)
-        elif complete.upper() == "V":
+            
+        elif complete.upper() == "V":  # displays code and reruns program
             view(run_path)
             
             input("Press enter to rerun...")
+            
+            complete, run_path = run_handle(path)
+            
+        elif complete.upper() == "E":  # opens files in editor and reruns program
+            
+            print("---------------------\nDisplay options:\n---------------------")
+            
+            x = 0
+            file_num = len(FILE_NAMES)
+            
+            while (True):
+                for x in range(file_num):
+                    print(f"{x}: {FILE_NAMES[x]}")
+                
+                print(f"{file_num}: Quit and rerun")
+                
+                option = input("> ")
+                
+                if int(option) == file_num:
+                    break
+                
+                try:
+                    os.system(NOTEPAD_CMD + " " + os.path.join(run_path, FILE_NAMES[int(option)]))
+                except Exception as e:
+                    print("< SELECTION ERROR >")
+                    print(e)
             
             complete, run_path = run_handle(path)
         else:
