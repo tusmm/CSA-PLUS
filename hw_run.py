@@ -12,25 +12,25 @@ RUN_DIR = ""
 # run directory
 # will almost always be "" (current directory)
 
-ALT_DIRS = ["homework08"]
+ALT_DIRS = ["homework09"]
 # alternative directives to check for code if not found in RUN_DIR
 
 CHECK_EXTENSION = ".py"
 # run extension
 
-RUN_DIRECT = False
+RUN_DIRECT = True
 # runs program directly by file name
 
-RUN_WITH_TEST = True
+RUN_WITH_TEST = False
 # runs program implementing external test program
 
-RUN_NAME = "selection_sort.py"
+RUN_NAME = "names_in_year.py"
 # program file to initiate execution with
 
 TEST_NAME = "run.py"
 # external test program file name (must be in main directory)
 
-FILE_NAMES = ["selection_sort.py"]
+FILE_NAMES = ["names_in_year.py"]
 # program file names
 
 ZIP_NAME = "hw.zip"
@@ -39,7 +39,7 @@ ZIP_NAME = "hw.zip"
 RUN_COMMENT_TITLES = []
 # comment titles following code execution
 
-CODE_COMMENT_TITLES = [["Performance (40%)", "Sorting code implementation (15%)", "File processing and main code (20%)", "Answers to questions (15%)"]]
+CODE_COMMENT_TITLES = [["dataclass (25%)", "get_names_in_year (30%)", "run query (30%)", "main function (15%)"]]
 # comment titles associated with code blocks in each file
 # index of nested array corresponds with associated file index in FILE_NAMES variable
 # EVEN IF FILE HAS NO COMMENTS, EMPTY LIST '[]' MUST BE PLACED HERE FOR EACH FILE
