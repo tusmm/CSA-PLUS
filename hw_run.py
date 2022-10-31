@@ -18,10 +18,10 @@ ALT_DIRS = ["homework09"]
 CHECK_EXTENSION = ".py"
 # run extension
 
-RUN_DIRECT = True
+RUN_DIRECT = False
 # runs program directly by file name
 
-RUN_WITH_TEST = False
+RUN_WITH_TEST = True
 # runs program implementing external test program
 
 RUN_NAME = "names_in_year.py"
