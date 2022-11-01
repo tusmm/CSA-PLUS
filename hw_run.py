@@ -9,8 +9,8 @@ RUN CONFIGURATION SETTINGS vvv
 """
 
 RUN_DIR = ""
-# run directory
-# will almost always be "" (current directory)
+# subdirectory in student submission file where run-file is located
+# will almost always be "" (submission directory)
 
 ALT_DIRS = ["homework10"]
 # alternative directives to check for code if not found in RUN_DIR
@@ -39,7 +39,7 @@ ZIP_NAME = "hw.zip"
 RUN_COMMENT_TITLES = []
 # comment titles following code execution
 
-CODE_COMMENT_TITLES = [["defining dataclass (10%)", "file and data structure (10%)", "building droid (40%)", "running factory (25%)", "Task 5 (15%)"]]
+CODE_COMMENT_TITLES = [["Task 1: defining dataclasses (10%)", "Task 2: processing the file, creating and populating the data structure (10%)", "Task 3: building a droid using the conveyor belt (40%)", "Task 4: running the factory until the conveyor belt is empty (25%)", "Task 5: main function (15%)"]]
 # comment titles associated with code blocks in each file
 # index of nested array corresponds with associated file index in FILE_NAMES variable
 # EVEN IF FILE HAS NO COMMENTS, EMPTY LIST '[]' MUST BE PLACED HERE FOR EACH FILE
@@ -47,11 +47,12 @@ CODE_COMMENT_TITLES = [["defining dataclass (10%)", "file and data structure (10
 ADDITIONAL_COMMENTS = ["Style", "Documentation", "Total"]
 # aditional comment titles
 
-MAIN_DIR = os.getcwd()
-# gets the current directory to be used throughout the program
-
 NOTEPAD_CMD = "notepad"
 # text editor command
+
+MAIN_DIR = os.getcwd()
+# gets the current directory to be used for reference in "run" functions
+# CURRENT CODE SHOULD NOT NEED TO BE ALTERED
 
 """
 RUN CONFIGURATION SETTINGS ^^^
@@ -72,11 +73,11 @@ def run_program_python(dir, name):  # manages python file execution
     
     if RUN_WITH_TEST:
         cmd = "py " + TEST_NAME + ' "' + name + '" "' + dir + '"'
-        print(cmd)
         
         try:
             os.system(cmd)
             # test file must be in CSA+ main working directory
+            # all information to change directories / run code provided in command line arguments
             
         except:
             pass
@@ -151,15 +152,37 @@ def run_handle(path):  # handles program run
 
     run_path = os.path.join(path, RUN_DIR)
 
-    if not os.path.isfile(os.path.join(run_path, RUN_NAME)):
+    if not os.path.isfile(os.path.join(run_path, RUN_NAME)):  # uses alternate run directories if needed
         for alt in ALT_DIRS:
             if os.path.isfile(os.path.join(os.path.join(path, alt), RUN_NAME)):
                 run_path = os.path.join(path, alt)
-                break
+                break                
+    
+    copyfiles = os.listdir("copylib")
+    
+    for file in copyfiles:  # copies necessary files to student submission folder
+        try:
+            if os.path.isfile(os.path.join("copylib", file)):
+                shutil.copy(os.path.join("copylib", file), run_path)
+            else:
+                shutil.copytree(os.path.join("copylib", file), os.path.join(run_path, file))
+        except Exception as e:
+            print("< HOMEWORK RESOURCE COPY FAILURE >")
+            print(e)
 
     run_program(run_path, RUN_NAME)
     # runs program
-
+    
+    for file in copyfiles:  # removes copied resource files from student submission folder
+        try:
+            if os.path.isfile(os.path.join(run_path, file)):
+                os.remove(os.path.join(run_path, file))
+            else:
+                shutil.rmtree(os.path.join(run_path, file))
+        except Exception as e:
+            print("< HOMEWORK RESOURCE DELETION FAILURE >")
+            print(e)
+            
     print("---------------------")
 
     complete = ""
@@ -220,14 +243,21 @@ def main():
     except:
         print("No hw.zip file.  Grading continuation program commencing...")
     
-    try:
-        os.mkdir(os.path.join(MAIN_DIR, "comments"))
-        os.mkdir(os.path.join(MAIN_DIR, "incomplete"))
-        # creates comments and incomplete folders if they do not exist
-
+    try:  # creates comments folder if needed
+        os.mkdir("comments")
     except:
         pass
-
+        
+    try:  # creates incomplete folder if needed
+        os.mkdir("incomplete")
+    except:
+        pass
+        
+    try:  # creates copylib folder if needed
+        os.mkdir("copylib")
+    except:
+        pass
+    
     files = os.listdir("hw")
 
     for file in files:  # iterates through homework files

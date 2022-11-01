@@ -12,9 +12,6 @@ then rezip using inc_rezip.py, and then copy the zipped files back to the "hw" d
 
 Use data_compile.py to import data into google sheets using API.
 
+Optionally put files/directories to be copied into student submission folders in the "copylib" folder.
 
-INCLUDED:
-The following files are also included to demonstrate additional files that might be used for an assignment:
-- run.py (test module)
-- input1.txt, input2.txt (piped input files)
-- word_list.txt, words_sorted.txt (utility files used by run.py)
+"run.py" test module included to demonstrate writing a CSA+ run module.
