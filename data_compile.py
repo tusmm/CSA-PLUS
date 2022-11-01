@@ -5,7 +5,7 @@ import os
 
 gc = gspread.service_account(filename="credentials.json")
 gsheet = gc.open_by_url("https://docs.google.com/spreadsheets/d/10Md0RhjnPVyUNR_grxa46mNGy_dZoMT_Dbd8nUdMrLk/edit?usp=sharing")
-wsheet = gsheet.get_worksheet(7)
+wsheet = gsheet.get_worksheet(11)
 # gets google sheet and worksheet
 
 wsheet.update("A1", "Names")
