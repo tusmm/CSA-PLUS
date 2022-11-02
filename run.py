@@ -47,5 +47,5 @@ All of the droids have been assembled! Time to clock out and play Sabacc...
 
 print("RESULTS:\n----------")
 
-os.system(f'py "{pypath}"')
+os.system(f'py "{pypath}" < input.txt')
 print("\n")
